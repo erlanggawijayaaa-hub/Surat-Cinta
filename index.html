@@ -5,21 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Special Letter for You</title>
     <style>
-        /* Gaya dasar latar belakang gelap seperti di video */
+        /* Gaya dasar latar belakang */
         body {
             margin: 0;
             padding: 0;
-            background-color: #0d1117; /* Warna gelap elegan */
+            background-color: #0d1117;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             font-family: 'Times New Roman', serif;
-            overflow: hidden; /* Mencegah scrollbar muncul karena animasi */
+            overflow: hidden;
             color: #e6edf3;
         }
 
-        /* Kontainer surat dengan animasi muncul */
+        /* Kontainer surat */
         .card {
             background-color: #161b22;
             padding: 40px;
@@ -29,9 +29,10 @@
             width: 80%;
             text-align: center;
             border: 1px solid #30363d;
-            animation: fadeIn 2s ease-in-out;
-            position: relative; /* Penting untuk tumpukan bunga di depan */
+            animation: fadeIn 1.5s ease-in-out;
+            position: relative;
             z-index: 10;
+            min-height: 300px; /* Menjaga ukuran kotak agar tidak lompat-lompat */
         }
 
         @keyframes fadeIn {
@@ -39,6 +40,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Gaya teks */
         .header {
             font-style: italic;
             color: #8b949e;
@@ -46,12 +48,14 @@
             margin-bottom: 20px;
             border-bottom: 1px solid #30363d;
             padding-bottom: 10px;
+            min-height: 20px;
         }
 
         h1 {
             color: #e6edf3;
             font-size: 1.5em;
             margin-bottom: 10px;
+            min-height: 30px;
         }
 
         .content {
@@ -59,6 +63,8 @@
             line-height: 1.8;
             font-size: 1.1em;
             text-align: left;
+            white-space: pre-wrap; /* Penting untuk efek enter/baris baru */
+            min-height: 150px;
         }
 
         .signature {
@@ -67,97 +73,124 @@
             font-weight: bold;
             font-size: 1.2em;
             font-family: 'Brush Script MT', cursive;
+            min-height: 25px;
         }
 
-        /* --- GAYA UNTUK ANIMASI BUNGA --- */
+        /* Efek kursor berkedip */
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            background-color: #e6edf3;
+            animation: blink 0.75s step-end infinite;
+            margin-left: 2px;
+            vertical-align: text-bottom;
+        }
+
+        @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Animasi Bunga */
         .flower {
             position: absolute;
             background-size: contain;
             background-repeat: no-repeat;
-            pointer-events: none; /* Agar tidak bisa diklik */
-            z-index: 5; /* Di belakang card, di depan background */
+            pointer-events: none;
+            z-index: 5;
             animation-name: fall;
             animation-timing-function: linear;
             animation-iteration-count: infinite;
-            will-change: transform, opacity; /* Optimalisasi performa */
+            will-change: transform, opacity;
         }
 
         @keyframes fall {
-            0% {
-                transform: translateY(-100%) rotate(0deg) translateX(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(360deg) translateX(20px);
-                opacity: 0;
-            }
+            0% { transform: translateY(-100%) rotate(0deg) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg) translateX(20px); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <div class="header">Another Year of You</div>
-        
-        <!-- EDIT DI SINI: Ganti [Nama Dia] jadi Ayya -->
-        <h1>Dearest, Ayya</h1>
-        
-        <div class="content">
-            Happy birthday! <br><br>
-            Gak kerasa ya udah ganti chapter lagi hari ini. Di momen spesial ini, aku cuma mau bilang kalau aku bersyukur banget ada kamu. Semoga di umur yang baru ini, kamu dapet lebih banyak momen yang bikin kamu ketawa lepas, makin sedikit overthinking-nya, dan selalu didekatkan sama hal-hal baik.
-        </div>
-
-        <!-- EDIT DI SINI: Ganti [Nama Kamu] jadi El -->
-        <div class="signature">
-            Your biggest fan, El
-        </div>
+        <div class="header" id="text1"></div>
+        <h1 id="text2"></h1>
+        <div class="content" id="text3"></div>
+        <div class="signature" id="text4"></div>
     </div>
 
-    <!-- SCRIPT JAVASCRIPT UNTUK MEMBUAT BUNGA -->
     <script>
-        // Fungsi untuk membuat bunga baru
+        // --- JAVASCRIPT UNTUK EFEK MESIN TIK ---
+        // Kamu bisa mengedit pesannya di bagian 'text' ini jika mau
+        const textData = [
+            { id: 'text1', text: "Another Year of You", speed: 60 },
+            { id: 'text2', text: "Dearest, Ayya", speed: 80 },
+            { id: 'text3', text: "Happy birthday!\n\nGak kerasa ya udah ganti chapter lagi hari ini. Di momen spesial ini, aku cuma mau bilang kalau aku bersyukur banget ada kamu. Semoga di umur yang baru ini, kamu dapet lebih banyak momen yang bikin kamu ketawa lepas, makin sedikit overthinking-nya, dan selalu didekatkan sama hal-hal baik.", speed: 45 },
+            { id: 'text4', text: "Your biggest fan, El", speed: 70 }
+        ];
+
+        async function typeWriter() {
+            // Tunggu 1 detik agar animasi kotak selesai dulu sebelum ngetik
+            await new Promise(r => setTimeout(r, 1000));
+
+            for (let i = 0; i < textData.length; i++) {
+                const el = document.getElementById(textData[i].id);
+                const txt = textData[i].text;
+                const speed = textData[i].speed;
+
+                // Tambahkan kursor
+                const cursor = document.createElement('span');
+                cursor.className = 'cursor';
+                cursor.innerHTML = '&nbsp;'; // spasi kosong agar kursor memiliki tinggi
+                el.appendChild(cursor);
+
+                // Proses mengetik huruf satu per satu
+                for (let j = 0; j < txt.length; j++) {
+                    const charNode = document.createTextNode(txt.charAt(j));
+                    el.insertBefore(charNode, cursor);
+                    await new Promise(r => setTimeout(r, speed));
+                }
+                
+                // Hapus kursor saat pindah ke baris teks berikutnya
+                if (i < textData.length - 1) {
+                    cursor.remove();
+                    await new Promise(r => setTimeout(r, 400)); // jeda sebelum ngetik paragraf baru
+                }
+            }
+        }
+
+        // --- JAVASCRIPT UNTUK BUNGA ---
         function createFlower() {
             const flower = document.createElement('span');
             flower.className = 'flower';
-
-            // Kumpulan karakter emoji bunga untuk variasi
             const flowers = ['🌸', '🏵️', '🌺', '🌻', '🍃', '💮'];
             flower.textContent = flowers[Math.floor(Math.random() * flowers.length)];
 
-            // Mengatur posisi horizontal acak
             const startX = Math.random() * window.innerWidth;
             flower.style.left = `${startX}px`;
 
-            // Mengatur ukuran acak (semi-transparan agar lebih estetik)
             const size = Math.random() * (25 - 10) + 10;
             flower.style.fontSize = `${size}px`;
-            flower.style.opacity = Math.random() * (0.9 - 0.4) + 0.4; // Variasi transparansi
+            flower.style.opacity = Math.random() * (0.9 - 0.4) + 0.4;
 
-            // Mengatur durasi jatuh acak agar tidak seragam
             const duration = Math.random() * (12 - 6) + 6;
             flower.style.animationDuration = `${duration}s`;
 
-            // Mengatur jeda acak agar tidak jatuh bersamaan
             const delay = Math.random() * 5;
             flower.style.animationDelay = `${delay}s`;
 
-            // Tambahkan bunga ke dalam body
             document.body.appendChild(flower);
 
-            // Hapus elemen bunga setelah jatuh selesai untuk hemat memori
             setTimeout(() => {
                 flower.remove();
             }, (duration + delay) * 1000);
         }
 
-        // Jalankan fungsi createFlower terus menerus dengan jeda waktu
-        setInterval(createFlower, 400); // Buat bunga baru setiap 400ms
+        // Jalankan kedua fungsinya
+        typeWriter();
+        setInterval(createFlower, 400);
     </script>
 
 </body>
