@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Letter for You</title>
+    <style>
+        /* Gaya dasar latar belakang gelap seperti di video */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0d1117; /* Warna gelap elegan */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Times New Roman', serif;
+            overflow: hidden;
+        }
+
+        /* Kontainer surat dengan animasi muncul */
+        .card {
+            background-color: #161b22;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            max-width: 350px;
+            width: 80%;
+            text-align: center;
+            border: 1px solid #30363d;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            font-style: italic;
+            color: #8b949e;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #30363d;
+            padding-bottom: 10px;
+        }
+
+        h1 {
+            color: #e6edf3;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            color: #c9d1d9;
+            line-height: 1.8;
+            font-size: 1.1em;
+            text-align: left;
+        }
+
+        .signature {
+            margin-top: 30px;
+            color: #f0f6fc;
+            font-weight: bold;
+            font-size: 1.2em;
+            font-family: 'Brush Script MT', cursive;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="header">Another Year of You</div>
+        
+        <h1>Dearest, [Nama Dia]</h1>
+        
+        <div class="content">
+            Happy birthday! <br><br>
+            Gak kerasa ya udah ganti chapter lagi hari ini. Di momen spesial ini, aku cuma mau bilang kalau aku bersyukur banget ada kamu. Semoga di umur yang baru ini, kamu dapet lebih banyak momen yang bikin kamu ketawa lepas.
+        </div>
+
+        <div class="signature">
+            Your biggest fan, [Nama Kamu]
+        </div>
+    </div>
+
+</body>
+</html>
