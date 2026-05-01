@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Letter for You</title>
+    <title>A Special Letter for You</title>
     <style>
         /* Gaya dasar latar belakang gelap seperti di video */
         body {
@@ -15,7 +15,8 @@
             align-items: center;
             height: 100vh;
             font-family: 'Times New Roman', serif;
-            overflow: hidden;
+            overflow: hidden; /* Mencegah scrollbar muncul karena animasi */
+            color: #e6edf3;
         }
 
         /* Kontainer surat dengan animasi muncul */
@@ -29,6 +30,8 @@
             text-align: center;
             border: 1px solid #30363d;
             animation: fadeIn 2s ease-in-out;
+            position: relative; /* Penting untuk tumpukan bunga di depan */
+            z-index: 10;
         }
 
         @keyframes fadeIn {
@@ -65,6 +68,36 @@
             font-size: 1.2em;
             font-family: 'Brush Script MT', cursive;
         }
+
+        /* --- GAYA UNTUK ANIMASI BUNGA --- */
+        .flower {
+            position: absolute;
+            background-size: contain;
+            background-repeat: no-repeat;
+            pointer-events: none; /* Agar tidak bisa diklik */
+            z-index: 5; /* Di belakang card, di depan background */
+            animation-name: fall;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            will-change: transform, opacity; /* Optimalisasi performa */
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100%) rotate(0deg) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg) translateX(20px);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -72,17 +105,60 @@
     <div class="card">
         <div class="header">Another Year of You</div>
         
-        <h1>Dearest, [Nama Dia]</h1>
+        <!-- EDIT DI SINI: Ganti [Nama Dia] jadi Ayya -->
+        <h1>Dearest, Ayya</h1>
         
         <div class="content">
             Happy birthday! <br><br>
-            Gak kerasa ya udah ganti chapter lagi hari ini. Di momen spesial ini, aku cuma mau bilang kalau aku bersyukur banget ada kamu. Semoga di umur yang baru ini, kamu dapet lebih banyak momen yang bikin kamu ketawa lepas.
+            Gak kerasa ya udah ganti chapter lagi hari ini. Di momen spesial ini, aku cuma mau bilang kalau aku bersyukur banget ada kamu. Semoga di umur yang baru ini, kamu dapet lebih banyak momen yang bikin kamu ketawa lepas, makin sedikit overthinking-nya, dan selalu didekatkan sama hal-hal baik.
         </div>
 
+        <!-- EDIT DI SINI: Ganti [Nama Kamu] jadi El -->
         <div class="signature">
-            Your biggest fan, [Nama Kamu]
+            Your biggest fan, El
         </div>
     </div>
+
+    <!-- SCRIPT JAVASCRIPT UNTUK MEMBUAT BUNGA -->
+    <script>
+        // Fungsi untuk membuat bunga baru
+        function createFlower() {
+            const flower = document.createElement('span');
+            flower.className = 'flower';
+
+            // Kumpulan karakter emoji bunga untuk variasi
+            const flowers = ['🌸', '🏵️', '🌺', '🌻', '🍃', '💮'];
+            flower.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+
+            // Mengatur posisi horizontal acak
+            const startX = Math.random() * window.innerWidth;
+            flower.style.left = `${startX}px`;
+
+            // Mengatur ukuran acak (semi-transparan agar lebih estetik)
+            const size = Math.random() * (25 - 10) + 10;
+            flower.style.fontSize = `${size}px`;
+            flower.style.opacity = Math.random() * (0.9 - 0.4) + 0.4; // Variasi transparansi
+
+            // Mengatur durasi jatuh acak agar tidak seragam
+            const duration = Math.random() * (12 - 6) + 6;
+            flower.style.animationDuration = `${duration}s`;
+
+            // Mengatur jeda acak agar tidak jatuh bersamaan
+            const delay = Math.random() * 5;
+            flower.style.animationDelay = `${delay}s`;
+
+            // Tambahkan bunga ke dalam body
+            document.body.appendChild(flower);
+
+            // Hapus elemen bunga setelah jatuh selesai untuk hemat memori
+            setTimeout(() => {
+                flower.remove();
+            }, (duration + delay) * 1000);
+        }
+
+        // Jalankan fungsi createFlower terus menerus dengan jeda waktu
+        setInterval(createFlower, 400); // Buat bunga baru setiap 400ms
+    </script>
 
 </body>
 </html>
