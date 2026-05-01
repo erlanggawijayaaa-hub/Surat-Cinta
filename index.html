@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Special Letter for You</title>
     <style>
-        /* Gaya dasar latar belakang */
         body {
             margin: 0;
             padding: 0;
@@ -19,18 +18,18 @@
             color: #e6edf3;
         }
 
-        /* Kontainer surat dibuat lebih full screen untuk HP */
         .card {
             background-color: #161b22;
             padding: 35px 25px;
             border-radius: 15px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.9);
-            width: 90%; /* Mengisi 90% lebar layar HP */
+            width: 90%;
             max-width: 450px;
-            min-height: 80vh; /* Mengisi 80% tinggi layar HP */
+            max-height: 90vh; /* Agar tidak bablas ke bawah layar */
+            overflow-y: auto; /* Memunculkan scroll kalau isinya kepanjangan */
             display: flex;
             flex-direction: column;
-            justify-content: center; /* Membuat isi teks otomatis ke tengah kotak */
+            align-items: center; /* Memastikan isi di tengah */
             text-align: center;
             border: 1px solid #30363d;
             animation: fadeIn 1.5s ease-in-out;
@@ -38,19 +37,23 @@
             z-index: 10;
         }
 
+        /* Menyembunyikan scrollbar bawaan supaya tetap estetik */
+        .card::-webkit-scrollbar { display: none; }
+        .card { -ms-overflow-style: none; scrollbar-width: none; }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Gaya teks */
         .header {
             font-style: italic;
             color: #8b949e;
             font-size: 0.9em;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             border-bottom: 1px solid #30363d;
             padding-bottom: 15px;
+            width: 100%;
             min-height: 20px;
         }
 
@@ -61,25 +64,43 @@
             min-height: 30px;
         }
 
+        /* --- GAYA UNTUK FOTO --- */
+        .photo-frame {
+            width: 100%;
+            max-width: 220px;
+            border-radius: 10px;
+            margin: 10px 0 20px 0;
+            border: 2px solid #30363d;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.6);
+            opacity: 0; /* Mulai dari transparan */
+            animation: fadeInPhoto 2s ease-in-out 1.5s forwards; /* Muncul perlahan setelah animasi awal */
+        }
+
+        @keyframes fadeInPhoto {
+            to { opacity: 1; }
+        }
+
         .content {
             color: #c9d1d9;
             line-height: 1.8;
             font-size: 1.15em;
             text-align: left;
             white-space: pre-wrap; 
+            width: 100%;
             min-height: 180px;
         }
 
         .signature {
-            margin-top: 40px;
+            margin-top: 30px;
             color: #f0f6fc;
             font-weight: bold;
             font-size: 1.3em;
             font-family: 'Brush Script MT', cursive;
+            width: 100%;
+            text-align: center;
             min-height: 25px;
         }
 
-        /* Efek kursor berkedip */
         .cursor {
             display: inline-block;
             width: 2px;
@@ -94,7 +115,6 @@
             50% { opacity: 0; }
         }
 
-        /* Animasi Bunga */
         .flower {
             position: absolute;
             background-size: contain;
@@ -120,6 +140,9 @@
     <div class="card">
         <div class="header" id="text1"></div>
         <h1 id="text2"></h1>
+        
+        <img src="foto.jpg" alt="Our Memory" class="photo-frame">
+
         <div class="content" id="text3"></div>
         <div class="signature" id="text4"></div>
     </div>
