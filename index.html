@@ -16,7 +16,6 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            /* Font utama diubah jadi Lora */
             font-family: 'Lora', serif; 
             overflow: hidden;
             color: #e6edf3;
@@ -48,6 +47,41 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* --- HIASAN BUNGA DI 4 SUDUT --- */
+        .corner-decor {
+            position: absolute;
+            width: 50px;
+            opacity: 0.6; /* Transparan agar teks tetap jelas */
+            pointer-events: none;
+            z-index: 1; /* Posisi di belakang teks */
+        }
+        .top-left {
+            top: 20px;
+            left: 20px;
+            transform: rotate(-20deg);
+        }
+        .top-right {
+            top: 20px;
+            right: 20px;
+            transform: rotate(20deg);
+        }
+        .bottom-left {
+            bottom: 20px;
+            left: 20px;
+            transform: rotate(-110deg);
+        }
+        .bottom-right {
+            bottom: 20px;
+            right: 20px;
+            transform: rotate(110deg);
+        }
+
+        /* Memastikan teks dan foto berada di atas bunga */
+        .header, h1, .content, .signature, .photo-frame {
+            position: relative;
+            z-index: 5;
+        }
+
         .header {
             font-style: italic;
             color: #8b949e;
@@ -61,7 +95,6 @@
         }
 
         h1 {
-            /* Font judul diubah jadi Playfair Display */
             font-family: 'Playfair Display', serif;
             color: #e6edf3;
             font-size: 1.6em;
@@ -89,7 +122,6 @@
             color: #c9d1d9;
             line-height: 1.8;
             font-size: 1.1em;
-            /* DI SINI UBAHANNYA: Membuat teks rata kiri-kanan */
             text-align: justify; 
             white-space: pre-wrap; 
             width: 100%;
@@ -139,11 +171,31 @@
             90% { opacity: 1; }
             100% { transform: translateY(100vh) rotate(360deg) translateX(20px); opacity: 0; }
         }
+
+        .pokemon {
+            position: absolute;
+            bottom: 15px; 
+            left: -100px; 
+            width: 60px; 
+            z-index: 20; 
+            animation: runAcross 12s linear infinite; 
+            pointer-events: none;
+        }
+
+        @keyframes runAcross {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(100vw + 100px)); } 
+        }
     </style>
 </head>
 <body>
 
     <div class="card">
+        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f338.svg" class="corner-decor top-left" alt="bunga">
+        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f338.svg" class="corner-decor top-right" alt="bunga">
+        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f338.svg" class="corner-decor bottom-left" alt="bunga">
+        <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f338.svg" class="corner-decor bottom-right" alt="bunga">
+
         <div class="header" id="text1"></div>
         <h1 id="text2"></h1>
         
@@ -153,8 +205,9 @@
         <div class="signature" id="text4"></div>
     </div>
 
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/25.gif" class="pokemon" alt="Pikachu Berlari">
+
     <script>
-        // PESAN GOMBALAN MANIS (Pilihan 1 sebelumnya)
         const textData = [
             { id: 'text1', text: "Just a Little Something for You", speed: 60 },
             { id: 'text2', text: "Dearest, Ayya", speed: 80 },
