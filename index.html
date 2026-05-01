@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Special Letter for You</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+
     <style>
         body {
             margin: 0;
@@ -13,7 +16,8 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            font-family: 'Times New Roman', serif;
+            /* Font utama diubah jadi Lora */
+            font-family: 'Lora', serif; 
             overflow: hidden;
             color: #e6edf3;
         }
@@ -30,7 +34,6 @@
             display: flex;
             flex-direction: column;
             align-items: center; 
-            text-align: center;
             border: 1px solid #30363d;
             animation: fadeIn 1.5s ease-in-out;
             position: relative;
@@ -54,16 +57,19 @@
             padding-bottom: 15px;
             width: 100%;
             min-height: 20px;
+            text-align: center;
         }
 
         h1 {
+            /* Font judul diubah jadi Playfair Display */
+            font-family: 'Playfair Display', serif;
             color: #e6edf3;
             font-size: 1.6em;
             margin-bottom: 15px;
             min-height: 30px;
+            text-align: center;
         }
 
-        /* Gaya untuk Foto */
         .photo-frame {
             width: 100%;
             max-width: 220px;
@@ -82,8 +88,9 @@
         .content {
             color: #c9d1d9;
             line-height: 1.8;
-            font-size: 1.15em;
-            text-align: left;
+            font-size: 1.1em;
+            /* DI SINI UBAHANNYA: Membuat teks rata kiri-kanan */
+            text-align: justify; 
             white-space: pre-wrap; 
             width: 100%;
             min-height: 180px;
@@ -147,10 +154,11 @@
     </div>
 
     <script>
+        // PESAN GOMBALAN MANIS (Pilihan 1 sebelumnya)
         const textData = [
-           { id: 'text1', text: "Not a Special Day, Just a Special Person", speed: 60 },
+            { id: 'text1', text: "Just a Little Something for You", speed: 60 },
             { id: 'text2', text: "Dearest, Ayya", speed: 80 },
-            { id: 'text3', text: "Katanya kalau sering lihat yang manis-manis bisa bahaya, tapi kalau lihat kamu terus bawaannya malah pengen cepet-cepet wujudin semua bucket list kita.\n\nIni bukan surat buat ngerayain apa-apa, cuma mau bilang: tolong tetap jadi diri kamu yang sekarang ya. Jangan berubah sedikit pun. Tetap jadi Ayya yang bikin aku nyaman setiap harinya.", speed: 45 },
+            { id: 'text3', text: "Tahu nggak bedanya kamu sama cuaca? Kalau cuaca bisa berubah-ubah, kalau kamu... please jangan pernah berubah ya.\n\nTetap jadi Ayya yang aku kenal sekarang. Aku bersyukur banget bisa bareng sama kamu, dan jujur aku udah nggak sabar buat coret semua bucket list kencan kita bareng-bareng. Stay exactly as you are, karena versi kamu yang ini udah kelewat sempurna buat aku.", speed: 45 },
             { id: 'text4', text: "Your biggest fan, El", speed: 70 }
         ];
 
