@@ -19,20 +19,23 @@
             color: #e6edf3;
         }
 
-        /* Kontainer surat */
+        /* Kontainer surat dibuat lebih full screen untuk HP */
         .card {
             background-color: #161b22;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-            max-width: 350px;
-            width: 80%;
+            padding: 35px 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.9);
+            width: 90%; /* Mengisi 90% lebar layar HP */
+            max-width: 450px;
+            min-height: 80vh; /* Mengisi 80% tinggi layar HP */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Membuat isi teks otomatis ke tengah kotak */
             text-align: center;
             border: 1px solid #30363d;
             animation: fadeIn 1.5s ease-in-out;
             position: relative;
             z-index: 10;
-            min-height: 300px; /* Menjaga ukuran kotak agar tidak lompat-lompat */
         }
 
         @keyframes fadeIn {
@@ -45,33 +48,33 @@
             font-style: italic;
             color: #8b949e;
             font-size: 0.9em;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             border-bottom: 1px solid #30363d;
-            padding-bottom: 10px;
+            padding-bottom: 15px;
             min-height: 20px;
         }
 
         h1 {
             color: #e6edf3;
-            font-size: 1.5em;
-            margin-bottom: 10px;
+            font-size: 1.6em;
+            margin-bottom: 15px;
             min-height: 30px;
         }
 
         .content {
             color: #c9d1d9;
             line-height: 1.8;
-            font-size: 1.1em;
+            font-size: 1.15em;
             text-align: left;
-            white-space: pre-wrap; /* Penting untuk efek enter/baris baru */
-            min-height: 150px;
+            white-space: pre-wrap; 
+            min-height: 180px;
         }
 
         .signature {
-            margin-top: 30px;
+            margin-top: 40px;
             color: #f0f6fc;
             font-weight: bold;
-            font-size: 1.2em;
+            font-size: 1.3em;
             font-family: 'Brush Script MT', cursive;
             min-height: 25px;
         }
@@ -122,8 +125,6 @@
     </div>
 
     <script>
-        // --- JAVASCRIPT UNTUK EFEK MESIN TIK ---
-        // Kamu bisa mengedit pesannya di bagian 'text' ini jika mau
         const textData = [
             { id: 'text1', text: "Another Year of You", speed: 60 },
             { id: 'text2', text: "Dearest, Ayya", speed: 80 },
@@ -132,7 +133,6 @@
         ];
 
         async function typeWriter() {
-            // Tunggu 1 detik agar animasi kotak selesai dulu sebelum ngetik
             await new Promise(r => setTimeout(r, 1000));
 
             for (let i = 0; i < textData.length; i++) {
@@ -140,28 +140,24 @@
                 const txt = textData[i].text;
                 const speed = textData[i].speed;
 
-                // Tambahkan kursor
                 const cursor = document.createElement('span');
                 cursor.className = 'cursor';
-                cursor.innerHTML = '&nbsp;'; // spasi kosong agar kursor memiliki tinggi
+                cursor.innerHTML = '&nbsp;'; 
                 el.appendChild(cursor);
 
-                // Proses mengetik huruf satu per satu
                 for (let j = 0; j < txt.length; j++) {
                     const charNode = document.createTextNode(txt.charAt(j));
                     el.insertBefore(charNode, cursor);
                     await new Promise(r => setTimeout(r, speed));
                 }
                 
-                // Hapus kursor saat pindah ke baris teks berikutnya
                 if (i < textData.length - 1) {
                     cursor.remove();
-                    await new Promise(r => setTimeout(r, 400)); // jeda sebelum ngetik paragraf baru
+                    await new Promise(r => setTimeout(r, 400)); 
                 }
             }
         }
 
-        // --- JAVASCRIPT UNTUK BUNGA ---
         function createFlower() {
             const flower = document.createElement('span');
             flower.className = 'flower';
@@ -188,7 +184,6 @@
             }, (duration + delay) * 1000);
         }
 
-        // Jalankan kedua fungsinya
         typeWriter();
         setInterval(createFlower, 400);
     </script>
