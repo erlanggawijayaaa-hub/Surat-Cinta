@@ -21,6 +21,51 @@
             color: #e6edf3;
         }
 
+        /* --- HALAMAN AWAL (INTRO) --- */
+        #intro {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #0d1117;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100; /* Paling depan */
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        #intro h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            margin-bottom: 30px;
+            color: #e6edf3;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn {
+            background-color: #161b22;
+            color: #e6edf3;
+            border: 1px solid #30363d;
+            padding: 12px 35px;
+            font-size: 1.2em;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Lora', serif;
+        }
+
+        .btn:hover {
+            background-color: #30363d;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- KARTU SURAT UTAMA --- */
         .card {
             background-color: #161b22;
             padding: 35px 25px;
@@ -30,7 +75,7 @@
             max-width: 450px;
             max-height: 90vh; 
             overflow-y: auto; 
-            display: flex;
+            display: none; /* Disembunyikan dulu sampai tombol 'Iya' diklik */
             flex-direction: column;
             align-items: center; 
             border: 1px solid #30363d;
@@ -51,32 +96,15 @@
         .corner-decor {
             position: absolute;
             width: 50px;
-            opacity: 0.6; /* Transparan agar teks tetap jelas */
+            opacity: 0.6; 
             pointer-events: none;
-            z-index: 1; /* Posisi di belakang teks */
+            z-index: 1; 
         }
-        .top-left {
-            top: 20px;
-            left: 20px;
-            transform: rotate(-20deg);
-        }
-        .top-right {
-            top: 20px;
-            right: 20px;
-            transform: rotate(20deg);
-        }
-        .bottom-left {
-            bottom: 20px;
-            left: 20px;
-            transform: rotate(-110deg);
-        }
-        .bottom-right {
-            bottom: 20px;
-            right: 20px;
-            transform: rotate(110deg);
-        }
+        .top-left { top: 20px; left: 20px; transform: rotate(-20deg); }
+        .top-right { top: 20px; right: 20px; transform: rotate(20deg); }
+        .bottom-left { bottom: 20px; left: 20px; transform: rotate(-110deg); }
+        .bottom-right { bottom: 20px; right: 20px; transform: rotate(110deg); }
 
-        /* Memastikan teks dan foto berada di atas bunga */
         .header, h1, .content, .signature, .photo-frame {
             position: relative;
             z-index: 5;
@@ -114,9 +142,7 @@
             animation: fadeInPhoto 2s ease-in-out 1.5s forwards; 
         }
 
-        @keyframes fadeInPhoto {
-            to { opacity: 1; }
-        }
+        @keyframes fadeInPhoto { to { opacity: 1; } }
 
         .content {
             color: #c9d1d9;
@@ -180,6 +206,7 @@
             z-index: 20; 
             animation: runAcross 12s linear infinite; 
             pointer-events: none;
+            display: none; /* Disembunyikan dulu */
         }
 
         @keyframes runAcross {
@@ -190,7 +217,15 @@
 </head>
 <body>
 
-    <div class="card">
+    <div id="intro">
+        <h2 id="introText">Ada ucapan nih untuk kamu, mau lihat?</h2>
+        <div class="btn-group" id="btnGroup">
+            <button class="btn" onclick="openLetter()">Iya</button>
+            <button class="btn" onclick="rejectLetter()">Tidak</button>
+        </div>
+    </div>
+
+    <div class="card" id="mainCard">
         <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f338.svg" class="corner-decor top-left" alt="bunga">
         <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f338.svg" class="corner-decor top-right" alt="bunga">
         <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f338.svg" class="corner-decor bottom-left" alt="bunga">
@@ -205,9 +240,28 @@
         <div class="signature" id="text4"></div>
     </div>
 
-    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/25.gif" class="pokemon" alt="Pikachu Berlari">
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/25.gif" class="pokemon" id="pikachu" alt="Pikachu Berlari">
 
     <script>
+        // LOGIKA UNTUK TOMBOL AWAL
+        function openLetter() {
+            // Sembunyikan intro, tampilkan surat dan pikachu
+            document.getElementById('intro').style.display = 'none';
+            document.getElementById('mainCard').style.display = 'flex';
+            document.getElementById('pikachu').style.display = 'block';
+            
+            // Mulai semua animasi
+            typeWriter();
+            setInterval(createFlower, 400);
+        }
+
+        function rejectLetter() {
+            // Kalau dia menolak
+            document.getElementById('introText').innerText = "Harus mau pokoknya! Lihat dongg 🥺❤️";
+            document.getElementById('btnGroup').innerHTML = '<button class="btn" onclick="openLetter()">Iya deh</button>';
+        }
+
+        // TEKS SURAT
         const textData = [
             { id: 'text1', text: "Just a Little Something for You", speed: 60 },
             { id: 'text2', text: "Dearest, Ayya", speed: 80 },
@@ -215,6 +269,7 @@
             { id: 'text4', text: "Your biggest fan, El", speed: 70 }
         ];
 
+        // FUNGSI ANIMASI KETIK
         async function typeWriter() {
             await new Promise(r => setTimeout(r, 1000));
 
@@ -241,6 +296,7 @@
             }
         }
 
+        // FUNGSI BUNGA JATUH
         function createFlower() {
             const flower = document.createElement('span');
             flower.className = 'flower';
@@ -266,9 +322,6 @@
                 flower.remove();
             }, (duration + delay) * 1000);
         }
-
-        typeWriter();
-        setInterval(createFlower, 400);
     </script>
 
 </body>
